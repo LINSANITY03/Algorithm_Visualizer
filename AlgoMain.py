@@ -73,17 +73,20 @@ class Drawboard(DrawGameState):
 
     def __init__(self, screen, gs) -> None:
         super().__init__(screen, gs)
+        self.draw_Rect()
 
-        p.draw.rect(screen, p.Color("gray"),
+    def draw_Rect(self):
+        p.draw.rect(self.screen, p.Color("gray"),
                     (RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT))
         for r in range(DIMENSIONS):
             for c in range(DIMENSIONS):
                 rect_obj = p.Rect(RECT_X+c*SQ_SIZE, RECT_Y +
                                   r*SQ_SIZE, SQ_SIZE, SQ_SIZE)
-                p.draw.rect(screen, p.Color("black"), rect_obj, 1)
+                p.draw.rect(self.screen, p.Color("black"), rect_obj, 1)
 
 
 class Button(DrawGameState):
+
     '''
     Responsible for choosing src, destin
     '''
