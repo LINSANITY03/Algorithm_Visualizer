@@ -28,48 +28,59 @@ def loadImages():
     pass
 
 
-def main():
+class MainRun:
+
     '''
     The main driver for our code. This will handle user input and updating the graphics.
     '''
-    p.init()
-    p.display.set_caption("Algo Visualizer")
-    icon = p.image.load("./assets/logo.png")
-    p.display.set_icon(icon)
-    screen = p.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    clock = p.time.Clock()
-    screen.fill(p.Color("dark green"))
-    gs = AlgoEngine.GameState()
-    loadImages()
-    running = True
-    while running:
-        for e in p.event.get():
-            if e.type == p.QUIT:
-                running = False
-        drawGameState(screen, gs)
-        clock.tick(MAX_FPS)
-        p.display.flip()
+
+    def __init__(self) -> None:
+        p.init()
+        p.display.set_caption("Algo Visualizer")
+        p.display.set_icon(p.image.load("./assets/logo.png"))
+        screen = p.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        clock = p.time.Clock()
+        screen.fill(p.Color("dark green"))
+        gs = AlgoEngine.GameState()
+        loadImages()
+        running = True
+        while running:
+            for e in p.event.get():
+                if e.type == p.QUIT:
+                    running = False
+            Drawboard(screen, gs)
+            clock.tick(MAX_FPS)
+            p.display.flip()
 
 
-def drawGameState(screen, gs):
+class DrawGameState:
+
     '''
     Responsible for all the graphics within a current game state.
     '''
-    drawboard(screen)
+
+    def __init__(self, screen, gs) -> None:
+        self.screen = screen
+        self.gs = gs
 
 
-def drawboard(screen):
+class Drawboard(DrawGameState):
+
     '''
     Draw the squares on the board
     '''
-    p.draw.rect(screen, p.Color("gray"),
-                (RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT))
-    for r in range(DIMENSIONS):
-        for c in range(DIMENSIONS):
-            rect_obj = p.Rect(RECT_X+c*SQ_SIZE, RECT_Y +
-                              r*SQ_SIZE, SQ_SIZE, SQ_SIZE)
-            p.draw.rect(screen, p.Color("black"), rect_obj, 1)
+
+    def __init__(self, screen, gs) -> None:
+        super().__init__(screen, gs)
+
+        p.draw.rect(screen, p.Color("gray"),
+                    (RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT))
+        for r in range(DIMENSIONS):
+            for c in range(DIMENSIONS):
+                rect_obj = p.Rect(RECT_X+c*SQ_SIZE, RECT_Y +
+                                  r*SQ_SIZE, SQ_SIZE, SQ_SIZE)
+                p.draw.rect(screen, p.Color("black"), rect_obj, 1)
 
 
 if __name__ == '__main__':
-    main()
+    MainRun()
