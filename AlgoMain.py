@@ -49,6 +49,7 @@ class MainRun:
                 if e.type == p.QUIT:
                     running = False
             Drawboard(screen, gs)
+            Button(screen, gs)
             clock.tick(MAX_FPS)
             p.display.flip()
 
@@ -80,6 +81,30 @@ class Drawboard(DrawGameState):
                 rect_obj = p.Rect(RECT_X+c*SQ_SIZE, RECT_Y +
                                   r*SQ_SIZE, SQ_SIZE, SQ_SIZE)
                 p.draw.rect(screen, p.Color("black"), rect_obj, 1)
+
+
+class Button(DrawGameState):
+    '''
+    Responsible for choosing src, destin
+    '''
+
+    def __init__(self, screen, gs) -> None:
+        super().__init__(screen, gs)
+        p.font.init()
+        self.font = p.font.SysFont("Grobold", 15)
+        self.create_button()
+
+    def create_button(self):
+        text1 = self.font.render("Source", True, p.Color("black"))
+        text2 = self.font.render(
+            "Destination", True, p.Color("black"))
+        rect1 = text1.get_rect(topleft=(10, 10))
+        rect2 = text2.get_rect(topleft=(10, 40))
+        p.draw.rect(self.screen, p.Color("grey"), rect1)
+        p.draw.rect(self.screen, p.Color("grey"), rect2)
+
+        self.screen.blit(text1, rect1)
+        self.screen.blit(text2, rect2)
 
 
 if __name__ == '__main__':
