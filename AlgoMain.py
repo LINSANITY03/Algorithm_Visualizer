@@ -142,11 +142,16 @@ class Button(DrawGameState):
         super().__init__(screen, gs)
         p.font.init()
         self.font = p.font.SysFont("Grobold", 15)
+
         self.src_text = self.font.render("Source", True, p.Color("black"))
         self.dest_text = self.font.render(
             "Destination", True, p.Color("black"))
+        self.wall_text = self.font.render(
+            "Wall", True, p.Color("black"))
+
         self.src_btn = self.src_text.get_rect(topleft=(10, 10))
         self.dest_btn = self.dest_text.get_rect(topleft=(10, 40))
+        self.wall_btn = self.wall_text.get_rect(topleft=(10, 70))
         self.create_button()
 
     def create_button(self):
@@ -155,9 +160,11 @@ class Button(DrawGameState):
         '''
         p.draw.rect(self.screen, p.Color("grey"), self.src_btn)
         p.draw.rect(self.screen, p.Color("grey"), self.dest_btn)
+        p.draw.rect(self.screen, p.Color("grey"), self.wall_btn)
 
         self.screen.blit(self.src_text, self.src_btn)
         self.screen.blit(self.dest_text, self.dest_btn)
+        self.screen.blit(self.wall_text, self.wall_btn)
 
     def get_src_btn(self):
         '''
