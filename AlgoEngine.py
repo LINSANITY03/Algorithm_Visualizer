@@ -24,6 +24,7 @@ class GameState:
         ]
         self.movelog = []
         self.wall = []
+        self.iswall = False
         self.source = None
         self.issrc = False
         self.destination = None
