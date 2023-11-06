@@ -156,7 +156,7 @@ class Button(DrawGameState):
 
     def create_button(self):
         '''
-        Draw the rectangular shape for src and dest button on screen
+        Draw the rectangular shape for src, dest and walls button on screen
         '''
         p.draw.rect(self.screen, p.Color("grey"), self.src_btn)
         p.draw.rect(self.screen, p.Color("grey"), self.dest_btn)
