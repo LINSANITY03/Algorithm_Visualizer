@@ -44,6 +44,8 @@ class MainRun:
         gs = AlgoEngine.GameState()
         loadImages()
         running = True
+        mouseDown = False
+        mouseReleased = False
         while running:
             for e in p.event.get():
                 if e.type == p.QUIT:
@@ -51,13 +53,25 @@ class MainRun:
                 if e.type == p.MOUSEBUTTONDOWN:
                     if e.button == 1:
                         current_pos = e.pos
-                        if get_button.src_btn.collidepoint(current_pos):
+                        if get_button.src_btn.collidepoint(current_pos) and not gs.issrc:
                             gs.issrc = True
+                            gs.iswall = False
+                            gs.isdtn = False
                             get_button.create_src_selector(True)
 
-                        elif get_button.dest_btn.collidepoint(current_pos):
+                        elif get_button.dest_btn.collidepoint(current_pos) and not gs.isdtn:
                             gs.isdtn = True
+                            gs.issrc = False
+                            gs.iswall = False
                             get_button.create_dest_selector(True)
+
+                        elif get_button.wall_btn.collidepoint(current_pos):
+                            if gs.iswall:
+                                gs.iswall = False
+                            else:
+                                gs.iswall = True
+                            gs.isdtn = False
+                            gs.issrc = False
 
                         elif gs.issrc and not gs.source:
                             board_x = (current_pos[0] - RECT_X)//SQ_SIZE
@@ -74,6 +88,20 @@ class MainRun:
                                 gs.board[board_y][board_x] = "dest"
                                 gs.destination = True
                                 get_button.create_dest_selector(False)
+
+                        elif gs.iswall:
+                            mouseDown = True
+                            mouseReleased = False
+                            if mouseDown and not mouseReleased:
+                                board_x = (current_pos[0] - RECT_X)//SQ_SIZE
+                                board_y = (current_pos[1] - RECT_Y)//SQ_SIZE
+                                if 0 <= board_x <= 10 and 0 <= board_y <= 10:
+                                    gs.wall.append((board_y, board_x))
+                                    gs.board[board_y][board_x] = "wall"
+
+                                if e.type == p.MOUSEBUTTONUP:
+                                    mouseDown = False
+                                    mouseReleased = True
 
             Drawboard(screen, gs)
             get_button = Button(screen, gs)
@@ -115,7 +143,7 @@ class Drawboard(DrawGameState):
         Create a gray rectangular first and grid along border as per the loop
         '''
 
-        colors = [p.Color("green"), p.Color("red")]
+        colors = [p.Color("green"), p.Color("red"), p.Color("brown")]
         p.draw.rect(self.screen, p.Color("gray"),
                     (RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT))
         for r in range(DIMENSIONS):
@@ -127,6 +155,8 @@ class Drawboard(DrawGameState):
                     p.draw.rect(self.screen, colors[0], rect_obj)
                 elif self.gs.board[r][c] == "dest":
                     p.draw.rect(self.screen, colors[1], rect_obj)
+                elif self.gs.board[r][c] == "wall":
+                    p.draw.rect(self.screen, colors[2], rect_obj)
 
 
 class Button(DrawGameState):
