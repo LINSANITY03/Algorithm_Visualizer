@@ -44,8 +44,6 @@ class MainRun:
         gs = AlgoEngine.GameState()
         loadImages()
         running = True
-        mouseDown = False
-        mouseReleased = False
         while running:
             for e in p.event.get():
                 if e.type == p.QUIT:
@@ -78,7 +76,7 @@ class MainRun:
                             board_y = (current_pos[1] - RECT_Y)//SQ_SIZE
                             if 0 <= board_x <= 10 and 0 <= board_y <= 10:
                                 gs.board[board_y][board_x] = "src"
-                                gs.source = True
+                                gs.source = [board_y, board_x]
                                 get_button.create_src_selector(False)
 
                         elif gs.isdtn and not gs.destination:
@@ -86,24 +84,23 @@ class MainRun:
                             board_y = (current_pos[1] - RECT_Y)//SQ_SIZE
                             if 0 <= board_x <= 10 and 0 <= board_y <= 10:
                                 gs.board[board_y][board_x] = "dest"
-                                gs.destination = True
+                                gs.isdtn = True
+                                gs.destination = [board_y, board_x]
                                 get_button.create_dest_selector(False)
 
                         elif gs.iswall:
-                            mouseDown = True
-                            mouseReleased = False
-                            if mouseDown and not mouseReleased:
-                                board_x = (current_pos[0] - RECT_X)//SQ_SIZE
-                                board_y = (current_pos[1] - RECT_Y)//SQ_SIZE
-                                if 0 <= board_x <= 10 and 0 <= board_y <= 10:
-                                    gs.wall.append((board_y, board_x))
+                            board_x = (current_pos[0] - RECT_X)//SQ_SIZE
+                            board_y = (current_pos[1] - RECT_Y)//SQ_SIZE
+                            if 0 <= board_x <= 10 and 0 <= board_y <= 10:
+                                if [board_y, board_x] in gs.wall:
+                                    gs.wall.remove([board_y, board_x])
+                                    gs.board[board_y][board_x] = "--"
+                                    print(gs.board)
+                                else:
+                                    gs.wall.append([board_y, board_x])
                                     gs.board[board_y][board_x] = "wall"
 
-                                if e.type == p.MOUSEBUTTONUP:
-                                    mouseDown = False
-                                    mouseReleased = True
-
-            Drawboard(screen, gs)
+            get_board = Drawboard(screen, gs)
             get_button = Button(screen, gs)
             clock.tick(MAX_FPS)
             p.display.flip()
@@ -136,6 +133,8 @@ class Drawboard(DrawGameState):
         '''
 
         super().__init__(screen, gs)
+        self.colors = [p.Color("gray"), p.Color("green"),
+                       p.Color("red"), p.Color("brown")]
         self.draw_Rect()
 
     def draw_Rect(self):
@@ -143,20 +142,20 @@ class Drawboard(DrawGameState):
         Create a gray rectangular first and grid along border as per the loop
         '''
 
-        colors = [p.Color("green"), p.Color("red"), p.Color("brown")]
-        p.draw.rect(self.screen, p.Color("gray"),
+        p.draw.rect(self.screen, self.colors[0],
                     (RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT))
+
         for r in range(DIMENSIONS):
             for c in range(DIMENSIONS):
                 rect_obj = p.Rect(RECT_X+c*SQ_SIZE, RECT_Y +
                                   r*SQ_SIZE, SQ_SIZE, SQ_SIZE)
                 p.draw.rect(self.screen, p.Color("black"), rect_obj, 1)
                 if self.gs.board[r][c] == "src":
-                    p.draw.rect(self.screen, colors[0], rect_obj)
+                    p.draw.rect(self.screen, self.colors[1], rect_obj)
                 elif self.gs.board[r][c] == "dest":
-                    p.draw.rect(self.screen, colors[1], rect_obj)
+                    p.draw.rect(self.screen, self.colors[2], rect_obj)
                 elif self.gs.board[r][c] == "wall":
-                    p.draw.rect(self.screen, colors[2], rect_obj)
+                    p.draw.rect(self.screen, self.colors[3], rect_obj)
 
 
 class Button(DrawGameState):
