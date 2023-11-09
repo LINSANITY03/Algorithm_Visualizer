@@ -46,7 +46,6 @@ class Drawboard(DrawGameState):
             for c in range(gv.DIMENSIONS):
                 rect_obj = p.Rect(gv.RECT_X+c*gv.SQ_SIZE, gv.RECT_Y +
                                   r*gv.SQ_SIZE, gv.SQ_SIZE, gv.SQ_SIZE)
-                p.draw.rect(self.screen, p.Color("black"), rect_obj, 1)
                 if self.gs.board[r][c] == "src":
                     p.draw.rect(self.screen, self.colors[1], rect_obj)
                 elif self.gs.board[r][c] == "dest":
@@ -55,3 +54,5 @@ class Drawboard(DrawGameState):
                     p.draw.rect(self.screen, self.colors[3], rect_obj)
                 elif self.gs.board[r][c] == "xx":
                     p.draw.rect(self.screen, self.colors[4], rect_obj)
+
+                p.draw.rect(self.screen, p.Color("black"), rect_obj, 1)

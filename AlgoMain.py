@@ -77,9 +77,7 @@ class MainRun:
                                     gs.source, gs.destination, gs).search()
                                 gs.isrunning = False
                                 if path:
-                                    print("path", path)
                                     for each in path:
-                                        print()
                                         gs.board[each[0]][each[1]] = "xx"
                                 else:
                                     print("no path")
