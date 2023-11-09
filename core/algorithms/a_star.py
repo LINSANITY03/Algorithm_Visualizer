@@ -33,7 +33,7 @@ def heuristic(a, b):
     calculate the heuristic (Euclidean distance)
 
     '''
-    return math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2)
+    return ((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2)
 
 
 def reconstruct_path(start_node, end_node):
@@ -106,6 +106,7 @@ class AStar:
                     for each neighbour check if it is already visited or neighbour has less f value 
                     than the new f value.
                 '''
+
                 if child in self.closed:
                     continue
 
@@ -119,6 +120,10 @@ class AStar:
                         if each_node[0] < child.g:
                             continue
 
-                heapq.heappush(self.open, (child.f, child))
+                if self.gs.board[child.position[0]][child.position[1]] == "dest":
+                    heapq.heappush(self.open, (child.f, child))
+                else:
+                    heapq.heappush(self.open, (child.f, child))
+                    self.gs.board[child.position[0]][child.position[1]] = "vs"
 
         return None
