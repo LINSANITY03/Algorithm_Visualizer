@@ -8,6 +8,7 @@ import AlgoEngine
 from core.Game_core import GameCoreState as gcs
 from core.Game_core import GameVariable as gv
 from layout.AlgoLayout import Button
+from core.algorithms.a_star import AStar
 
 
 def loadImages():
@@ -84,6 +85,19 @@ class MainRun:
                                 else:
                                     gs.wall.append([board_y, board_x])
                                     gs.board[board_y][board_x] = "wall"
+
+                        elif not gs.isrunning:
+                            if not gs.source and not gs.destination:
+                                print("Please src and destination first")
+                            else:
+                                gs.isrunning = True
+                                path = AStar(
+                                    gs.source, gs.destination).search()
+                                if path:
+                                    for each in path:
+                                        gs.board[each[0]][each[1]] = "xx"
+                                else:
+                                    print("no path")
 
             gcs.Drawboard(screen, gs)
             get_button = Button(screen, gs)

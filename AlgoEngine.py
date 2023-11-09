@@ -29,3 +29,4 @@ class GameState:
         self.issrc = False
         self.destination = None
         self.isdtn = False
+        self.isrunning = False

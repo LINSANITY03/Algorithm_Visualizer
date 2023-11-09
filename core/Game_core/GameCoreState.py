@@ -30,7 +30,8 @@ class Drawboard(DrawGameState):
 
         super().__init__(screen, gs)
         self.colors = [p.Color("gray"), p.Color("green"),
-                       p.Color("red"), p.Color("brown")]
+                       p.Color("red"), p.Color("brown"),
+                       p.Color("blue")]
         self.draw_Rect()
 
     def draw_Rect(self):
@@ -52,3 +53,5 @@ class Drawboard(DrawGameState):
                     p.draw.rect(self.screen, self.colors[2], rect_obj)
                 elif self.gs.board[r][c] == "wall":
                     p.draw.rect(self.screen, self.colors[3], rect_obj)
+                elif self.gs.board[r][c] == "xx":
+                    p.draw.rect(self.screen, self.colors[4], rect_obj)
