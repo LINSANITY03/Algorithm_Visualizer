@@ -41,10 +41,10 @@ def reconstruct_path(start_node, end_node):
     get the path once the A* algorithm is completed
     '''
     total_path = []
+    end_node = end_node.parent
     while end_node != start_node:
         total_path.append(end_node.position)
         end_node = end_node.parent
-    total_path.append(start_node.position)
     return total_path[::-1]
 
 
