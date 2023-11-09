@@ -1,4 +1,3 @@
-from AlgoEngine import GameState
 import heapq
 import math
 
@@ -46,23 +45,20 @@ def reconstruct_path(start_node, end_node):
         total_path.append(end_node.position)
         end_node = end_node.parent
     total_path.append(start_node.position)
-    print(total_path)
     return total_path[::-1]
 
 
-class AStar(GameState):
+class AStar:
     '''
     Determines the shortest path distance between src and destination
 
     '''
 
-    def __init__(self, source, destination) -> None:
+    def __init__(self, source, destination, gs) -> None:
         '''
         Setup the initial parameter for the search algorithms
         '''
-
-        super().__init__()
-
+        self.gs = gs
         self.open = []
         self.closed = []
         self.start = Node(None, source)
@@ -72,7 +68,6 @@ class AStar(GameState):
         '''
         Create the logic for a* search returning shortest path if found
         '''
-
         heapq.heappush(self.open, (self.start.f, self.start))
         while self.open:
             current_node = heapq.heappop(self.open)[1]
@@ -101,7 +96,7 @@ class AStar(GameState):
 
                 if (new_position[0] < 0 or new_position[0] > 10
                     or new_position[1] < 0 or new_position[1] > 10
-                        or self.board[new_position[0]][new_position[1]] == "wall"
+                        or self.gs.board[new_position[0]][new_position[1]] == "wall"
                         or new_node in self.closed):
                     continue
                 children.append(new_node)

@@ -64,17 +64,37 @@ class MainRun:
                             gs.isdtn = False
                             gs.issrc = False
 
+                        elif get_button.start_btn.collidepoint(current_pos):
+
+                            if not gs.source and not gs.destination:
+                                print("Please src and destination first")
+
+                            if gs.isrunning:
+                                print("algorithm already running please wait...")
+                            else:
+                                gs.isrunning = True
+                                path = AStar(
+                                    gs.source, gs.destination, gs).search()
+                                gs.isrunning = False
+                                if path:
+                                    print("path", path)
+                                    for each in path:
+                                        print()
+                                        gs.board[each[0]][each[1]] = "xx"
+                                else:
+                                    print("no path")
+
                         elif gs.issrc and not gs.source:
                             if 0 <= board_x <= 10 and 0 <= board_y <= 10:
                                 gs.board[board_y][board_x] = "src"
-                                gs.source = [board_y, board_x]
+                                gs.source = (board_y, board_x)
                                 get_button.create_src_selector(False)
 
                         elif gs.isdtn and not gs.destination:
                             if 0 <= board_x <= 10 and 0 <= board_y <= 10:
                                 gs.board[board_y][board_x] = "dest"
                                 gs.isdtn = True
-                                gs.destination = [board_y, board_x]
+                                gs.destination = (board_y, board_x)
                                 get_button.create_dest_selector(False)
 
                         elif gs.iswall:
@@ -85,19 +105,6 @@ class MainRun:
                                 else:
                                     gs.wall.append([board_y, board_x])
                                     gs.board[board_y][board_x] = "wall"
-
-                        elif not gs.isrunning:
-                            if not gs.source and not gs.destination:
-                                print("Please src and destination first")
-                            else:
-                                gs.isrunning = True
-                                path = AStar(
-                                    gs.source, gs.destination).search()
-                                if path:
-                                    for each in path:
-                                        gs.board[each[0]][each[1]] = "xx"
-                                else:
-                                    print("no path")
 
             gcs.Drawboard(screen, gs)
             get_button = Button(screen, gs)
