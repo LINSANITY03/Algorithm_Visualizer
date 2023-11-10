@@ -29,7 +29,7 @@ class MainRun:
         p.display.set_caption("Algo Visualizer")
         screen = p.display.set_mode((gv.SCREEN_WIDTH, gv.SCREEN_HEIGHT))
         clock = p.time.Clock()
-        screen.fill(p.Color("dark green"))
+        screen.blit(p.image.load("assets/background.png"), (0, 0))
         gs = AlgoEngine.GameState()
         loadImages()
         running = True
@@ -43,19 +43,19 @@ class MainRun:
 
                         board_x = (current_pos[0] - gv.RECT_X)//gv.SQ_SIZE
                         board_y = (current_pos[1] - gv.RECT_Y)//gv.SQ_SIZE
-                        if get_button.src_btn.collidepoint(current_pos) and not gs.issrc:
+                        if get_button.src_rect.collidepoint(current_pos) and not gs.issrc:
                             gs.issrc = True
                             gs.iswall = False
                             gs.isdtn = False
                             get_button.create_src_selector(True)
 
-                        elif get_button.dest_btn.collidepoint(current_pos) and not gs.isdtn:
+                        elif get_button.dest_rect.collidepoint(current_pos) and not gs.isdtn:
                             gs.isdtn = True
                             gs.issrc = False
                             gs.iswall = False
                             get_button.create_dest_selector(True)
 
-                        elif get_button.wall_btn.collidepoint(current_pos):
+                        elif get_button.wall_rect.collidepoint(current_pos):
                             if gs.iswall:
                                 gs.iswall = False
                             else:
@@ -63,7 +63,7 @@ class MainRun:
                             gs.isdtn = False
                             gs.issrc = False
 
-                        elif get_button.start_btn.collidepoint(current_pos):
+                        elif get_button.start_rect.collidepoint(current_pos):
 
                             if not gs.source and not gs.destination:
                                 print("Please src and destination first")

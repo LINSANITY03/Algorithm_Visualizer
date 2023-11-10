@@ -13,57 +13,72 @@ class Button(DrawGameState):
         Initialize the required attribute to create the buttons
         '''
         super().__init__(screen, gs)
+
         p.font.init()
+
+        self.color = p.Color("white")
         self.font = p.font.Font("assets/font.ttf", 25)
+        self.image = p.image.load("assets/algo_btn_surf.png")
 
-        self.src_text = self.font.render("Source", True, p.Color("black"))
+        self.src_text = self.font.render("Source", True, self.color)
         self.dest_text = self.font.render(
-            "Destination", True, p.Color("black"))
+            "Destination", True, self.color)
         self.wall_text = self.font.render(
-            "Wall", True, p.Color("black"))
+            "Wall", True, self.color)
         self.start_text = self.font.render(
-            "Start", True, p.Color("black"))
+            "Start", True, self.color)
 
-        self.src_btn = self.src_text.get_rect(topleft=(10, 10))
-        self.dest_btn = self.dest_text.get_rect(topleft=(10, 40))
-        self.wall_btn = self.wall_text.get_rect(topleft=(10, 70))
-        self.start_btn = self.start_text.get_rect(topleft=(10, 100))
+        self.src_rect = self.src_text.get_rect(topleft=(30, 30))
+        self.dest_rect = self.dest_text.get_rect(topleft=(30, 90))
+        self.wall_rect = self.wall_text.get_rect(topleft=(30, 150))
+        self.start_rect = self.start_text.get_rect(topleft=(30, 210))
         self.create_button()
+
+    def center_image_to_text(self, rect):
+        '''
+        Center the image to the given object position
+        '''
+        return self.image.get_rect(center=rect.center)
 
     def create_button(self):
         '''
         Draw the rectangular shape for src, dest, walls and start button on screen
         '''
-        p.draw.rect(self.screen, p.Color("grey"), self.src_btn)
-        p.draw.rect(self.screen, p.Color("grey"), self.dest_btn)
-        p.draw.rect(self.screen, p.Color("grey"), self.wall_btn)
-        p.draw.rect(self.screen, p.Color("grey"), self.start_btn)
 
-        self.screen.blit(self.src_text, self.src_btn)
-        self.screen.blit(self.dest_text, self.dest_btn)
-        self.screen.blit(self.wall_text, self.wall_btn)
-        self.screen.blit(self.start_text, self.start_btn)
+        self.screen.blit(
+            self.image, self.center_image_to_text(self.src_rect))
+        self.screen.blit(
+            self.image, self.center_image_to_text(self.dest_rect))
+        self.screen.blit(
+            self.image, self.center_image_to_text(self.wall_rect))
+        self.screen.blit(
+            self.image, self.center_image_to_text(self.start_rect))
+
+        self.screen.blit(self.src_text, self.src_rect)
+        self.screen.blit(self.dest_text, self.dest_rect)
+        self.screen.blit(self.wall_text, self.wall_rect)
+        self.screen.blit(self.start_text, self.start_rect)
 
     def get_src_btn(self):
         '''
         Returns the src button object
         '''
 
-        return self.src_btn
+        return self.src_rect
 
     def get_dest_btn(self):
         '''
         Returns the destination button object
         '''
 
-        return self.dest_btn
+        return self.dest_rect
 
     def get_start_btn(self):
         '''
         Returns the start button object
         '''
 
-        return self.start_btn
+        return self.start_rect
 
     def create_src_selector(self, toggle):
         '''
