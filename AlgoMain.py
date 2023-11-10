@@ -28,7 +28,6 @@ class MainRun:
         p.init()
         p.display.set_caption("Algo Visualizer")
         screen = p.display.set_mode((gv.SCREEN_WIDTH, gv.SCREEN_HEIGHT))
-        print(screen.get_width())
         clock = p.time.Clock()
         screen.blit(p.image.load("assets/background.png"), (0, 0))
         gs = AlgoEngine.GameState()
@@ -84,16 +83,18 @@ class MainRun:
 
                         elif gs.issrc and not gs.source:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
+
+                                get_button.create_src_selector(False)
                                 gs.board[board_y][board_x] = "src"
                                 gs.source = (board_y, board_x)
-                                get_button.create_src_selector(False)
 
                         elif gs.isdtn and not gs.destination:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
+
+                                get_button.create_dest_selector(False)
                                 gs.board[board_y][board_x] = "dest"
                                 gs.isdtn = True
                                 gs.destination = (board_y, board_x)
-                                get_button.create_dest_selector(False)
 
                         elif gs.iswall:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
