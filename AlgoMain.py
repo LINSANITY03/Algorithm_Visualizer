@@ -44,13 +44,13 @@ class MainRun:
 
                         board_x = (current_pos[0] - gv.RECT_X)//gv.SQ_SIZE
                         board_y = (current_pos[1] - gv.RECT_Y)//gv.SQ_SIZE
-                        if get_button.src_rect.collidepoint(current_pos) and not gs.issrc:
+                        if get_button.src_rect.collidepoint(current_pos) and not gs.issrc and not gs.source:
                             gs.issrc = True
                             gs.iswall = False
                             gs.isdtn = False
                             get_button.create_src_selector(True)
 
-                        elif get_button.dest_rect.collidepoint(current_pos) and not gs.isdtn:
+                        elif get_button.dest_rect.collidepoint(current_pos) and not gs.isdtn and not gs.destination:
                             gs.isdtn = True
                             gs.issrc = False
                             gs.iswall = False
@@ -67,10 +67,12 @@ class MainRun:
                         elif get_button.start_rect.collidepoint(current_pos):
 
                             if not gs.source and not gs.destination:
-                                print("Please src and destination first")
+                                get_button.create_start_selector(
+                                    "Select source and destination first")
 
                             elif gs.isrunning:
-                                print("algorithm already running please wait...")
+                                get_button.create_start_selector(
+                                    "algorithm already running please wait...")
                             else:
                                 gs.isrunning = True
                                 path = AStar(
@@ -89,7 +91,6 @@ class MainRun:
                                 gs.source = (board_y, board_x)
                                 get_button.create_src_selector(False)
                                 gs.issrc = False
-                                print(gs.source)
 
                         elif gs.isdtn and not gs.destination:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:

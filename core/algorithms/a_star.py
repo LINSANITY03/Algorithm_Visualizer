@@ -1,5 +1,6 @@
 import heapq
 from core.Game_core import GameVariable as gv
+import math
 
 
 class Node:
@@ -10,6 +11,10 @@ class Node:
     def __init__(self, parent, position) -> None:
         self.parent = parent
         self.position = position
+
+        # g represents distance from starting node
+        # h cost represents distance from end node to current node
+        # f = g + h
 
         self.g = 0
         self.h = 0
@@ -27,13 +32,16 @@ class Node:
     def __eq__(self, other) -> bool:
         return self.position == other.position
 
+    def __hash__(self) -> int:
+        return hash(self.position)
+
 
 def heuristic(a, b):
     '''
     calculate the heuristic (Euclidean distance)
 
     '''
-    return ((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2)
+    return (math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2) * 10)
 
 
 def reconstruct_path(start_node, end_node):
@@ -41,9 +49,11 @@ def reconstruct_path(start_node, end_node):
     get the path once the A* algorithm is completed
     '''
     total_path = []
+    total_distance = 0
     end_node = end_node.parent
     while end_node != start_node:
         total_path.append(end_node.position)
+        total_distance += end_node.f
         end_node = end_node.parent
     return total_path[::-1]
 
@@ -60,7 +70,7 @@ class AStar:
         '''
         self.gs = gs
         self.open = []
-        self.closed = []
+        self.closed = set()
         self.start = Node(None, source)
         self.end = Node(None, destination)
 
@@ -68,10 +78,10 @@ class AStar:
         '''
         Create the logic for a* search returning shortest path if found
         '''
-        heapq.heappush(self.open, (self.start.f, self.start))
+        heapq.heappush(self.open, self.start)
         while self.open:
-            current_node = heapq.heappop(self.open)[1]
-            self.closed.append(current_node)
+            current_node = heapq.heappop(self.open)
+            self.closed.add(current_node)
 
             if current_node == self.end:
                 '''
@@ -108,20 +118,26 @@ class AStar:
                 if child in self.closed:
                     continue
 
-                child.g = current_node.g + \
-                    heuristic(current_node.position, child.position)
-                child.h = heuristic(new_position, self.end.position)
+                child.g = heuristic(self.start.position, child.position)
+                child.h = heuristic(child.position, self.end.position)
                 child.f = child.g + child.h
 
                 for each_node in self.open:
-                    if each_node[1].position == child.position:
-                        if each_node[0] < child.g:
+                    if each_node.position == child.position:
+                        if each_node.f < child.f:
                             continue
+                        elif each_node.f > child.f:
+                            each_node.f = child.f
+                            each_node.parent = child.parent
+                        else:
+                            if each_node.h > child.h:
+                                each_node.h = child.h
+                                each_node.parent = child.parent
 
                 if self.gs.board[child.position[0]][child.position[1]] == "dest":
-                    heapq.heappush(self.open, (child.f, child))
+                    heapq.heappush(self.open, child)
                 else:
-                    heapq.heappush(self.open, (child.f, child))
+                    heapq.heappush(self.open, child)
                     self.gs.board[child.position[0]][child.position[1]] = "vs"
 
         return None

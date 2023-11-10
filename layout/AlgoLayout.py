@@ -95,33 +95,31 @@ class Button(DrawGameState):
         '''
         Display the helper text to select the source cell
         '''
-        print('toggle', toggle)
-        print('self.gs.source', self.gs.source)
         if toggle:
             self.src_sel_text = self.font2.render(
-                "Select your source", True, p.Color("black"))
+                "Select source", True, p.Color("black"))
             self.src_sel_surf = self.src_sel_text.get_rect(
                 topleft=self.text_below_parent(self.src_rect))
-
             self.screen.blit(self.src_sel_text, self.src_sel_surf)
 
         else:
             if self.gs.source:
-                print("source selected")
                 self.src_sel_text = self.font2.render(
                     "Source selected", True, p.Color("black"))
                 self.src_sel_surf = self.src_sel_text.get_rect(
                     topleft=self.text_below_parent(self.src_rect))
-
+                self.screen.blit(p.image.load(
+                    "assets/source_text_sel.png"), self.src_sel_surf)
                 self.screen.blit(self.src_sel_text, self.src_sel_surf)
 
     def create_dest_selector(self, toggle):
         '''
         Display the helper text to select the destination cell
         '''
+
         if toggle:
             self.dest_sel_text = self.font2.render(
-                "Select your destination", True, p.Color("black"))
+                "Select destination", True, p.Color("black"))
             self.dest_sel_surf = self.dest_sel_text.get_rect(
                 topleft=self.text_below_parent(self.dest_rect))
             self.screen.blit(self.dest_sel_text, self.dest_sel_surf)
@@ -131,21 +129,17 @@ class Button(DrawGameState):
                     "Destination selected", True, p.Color("black"))
                 self.dest_sel_surf = self.dest_sel_text.get_rect(
                     topleft=self.text_below_parent(self.dest_rect))
+                self.screen.blit(p.image.load(
+                    "assets/dest_text_sel.png"), self.dest_sel_surf)
                 self.screen.blit(self.dest_sel_text, self.dest_sel_surf)
 
-    def create_start_selector(self):
+    def create_start_selector(self, text):
         '''
         Display the running process
         '''
-        if self.gs.isrunning:
-            self.start_sel_text = self.font2.render(
-                "Searching best path...", True, p.Color("black"))
-            self.start_sel_surf = self.start_sel_text.get_rect(
-                topleft=self.text_below_parent(self.start_rect))
-            self.screen.blit(self.start_sel_text, self.start_sel_surf)
-        else:
-            self.start_sel_text = self.font2.render(
-                "Done", True, p.Color("black"))
-            self.start_sel_surf = self.start_sel_text.get_rect(
-                topleft=self.text_below_parent(self.start_rect))
-            self.screen.blit(self.start_sel_text, self.start_sel_surf)
+        self.start_sel_text = self.font2.render(
+            text, True, p.Color("black"))
+        self.start_sel_surf = self.start_sel_text.get_rect(
+            topleft=self.text_below_parent(self.start_rect))
+        print(self.start_sel_surf)
+        self.screen.blit(self.start_sel_text, self.start_sel_surf)
