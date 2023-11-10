@@ -1,5 +1,5 @@
 import heapq
-import math
+from core.Game_core import GameVariable as gv
 
 
 class Node:
@@ -93,9 +93,8 @@ class AStar:
                 new_position = (
                     current_node.position[0] + x, current_node.position[1] + y)
                 new_node = Node(current_node, new_position)
-
-                if (new_position[0] < 0 or new_position[0] > 10
-                    or new_position[1] < 0 or new_position[1] > 10
+                if (new_position[0] < 0 or new_position[0] >= gv.DIMENSIONS
+                    or new_position[1] < 0 or new_position[1] >= gv.DIMENSIONS
                         or self.gs.board[new_position[0]][new_position[1]] == "wall"
                         or new_node in self.closed):
                     continue

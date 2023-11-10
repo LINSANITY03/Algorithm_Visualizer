@@ -83,20 +83,20 @@ class MainRun:
                                     print("no path")
 
                         elif gs.issrc and not gs.source:
-                            if 0 <= board_x <= 10 and 0 <= board_y <= 10:
+                            if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
                                 gs.board[board_y][board_x] = "src"
                                 gs.source = (board_y, board_x)
                                 get_button.create_src_selector(False)
 
                         elif gs.isdtn and not gs.destination:
-                            if 0 <= board_x <= 10 and 0 <= board_y <= 10:
+                            if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
                                 gs.board[board_y][board_x] = "dest"
                                 gs.isdtn = True
                                 gs.destination = (board_y, board_x)
                                 get_button.create_dest_selector(False)
 
                         elif gs.iswall:
-                            if 0 <= board_x <= 10 and 0 <= board_y <= 10:
+                            if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
                                 if [board_y, board_x] in gs.wall:
                                     gs.wall.remove([board_y, board_x])
                                     gs.board[board_y][board_x] = "--"
