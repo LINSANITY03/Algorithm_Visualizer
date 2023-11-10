@@ -28,6 +28,7 @@ class MainRun:
         p.init()
         p.display.set_caption("Algo Visualizer")
         screen = p.display.set_mode((gv.SCREEN_WIDTH, gv.SCREEN_HEIGHT))
+        print(screen.get_width())
         clock = p.time.Clock()
         screen.blit(p.image.load("assets/background.png"), (0, 0))
         gs = AlgoEngine.GameState()

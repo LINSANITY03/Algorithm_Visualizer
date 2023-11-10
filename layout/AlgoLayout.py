@@ -18,7 +18,12 @@ class Button(DrawGameState):
 
         self.color = p.Color("white")
         self.font = p.font.Font("assets/font.ttf", 25)
-        self.image = p.image.load("assets/algo_btn_surf.png")
+        self.font2 = p.font.Font("assets/font.ttf", 8)
+
+        self.src_image = p.image.load("assets/source_surface.png")
+        self.dest_image = p.image.load("assets/dest_surface.png")
+        self.wall_image = p.image.load("assets/wall_surface.png")
+        self.start_image = p.image.load("assets/start_surface.png")
 
         self.src_text = self.font.render("Source", True, self.color)
         self.dest_text = self.font.render(
@@ -29,16 +34,17 @@ class Button(DrawGameState):
             "Start", True, self.color)
 
         self.src_rect = self.src_text.get_rect(topleft=(30, 30))
-        self.dest_rect = self.dest_text.get_rect(topleft=(30, 90))
-        self.wall_rect = self.wall_text.get_rect(topleft=(30, 150))
-        self.start_rect = self.start_text.get_rect(topleft=(30, 210))
+        self.dest_rect = self.dest_text.get_rect(topleft=(30, 130))
+        self.wall_rect = self.wall_text.get_rect(topleft=(30, 230))
+        self.start_rect = self.start_text.get_rect(
+            topleft=(30, 430))
         self.create_button()
 
-    def center_image_to_text(self, rect):
+    def center_image_to_text(self, image, rect):
         '''
         Center the image to the given object position
         '''
-        return self.image.get_rect(center=rect.center)
+        return image.get_rect(center=rect.center)
 
     def create_button(self):
         '''
@@ -46,13 +52,13 @@ class Button(DrawGameState):
         '''
 
         self.screen.blit(
-            self.image, self.center_image_to_text(self.src_rect))
+            self.src_image, self.center_image_to_text(self.src_image, self.src_rect))
         self.screen.blit(
-            self.image, self.center_image_to_text(self.dest_rect))
+            self.dest_image, self.center_image_to_text(self.dest_image, self.dest_rect))
         self.screen.blit(
-            self.image, self.center_image_to_text(self.wall_rect))
+            self.wall_image, self.center_image_to_text(self.wall_image, self.wall_rect))
         self.screen.blit(
-            self.image, self.center_image_to_text(self.start_rect))
+            self.start_image, self.center_image_to_text(self.start_image, self.start_rect))
 
         self.screen.blit(self.src_text, self.src_rect)
         self.screen.blit(self.dest_text, self.dest_rect)
@@ -85,13 +91,13 @@ class Button(DrawGameState):
         Display the helper text to select the source cell
         '''
         if toggle:
-            self.src_sel_text = self.font.render(
+            self.src_sel_text = self.font2.render(
                 "Select your source", True, p.Color("black"))
             self.src_sel_surf = self.src_sel_text.get_rect(topleft=(10, 20))
             self.screen.blit(self.src_sel_text, self.src_sel_surf)
         else:
             if self.gs.source:
-                self.src_sel_text = self.font.render(
+                self.src_sel_text = self.font2.render(
                     "Source selected", True, p.Color("black"))
                 self.src_sel_surf = self.src_sel_text.get_rect(
                     topleft=(10, 20))
@@ -102,13 +108,13 @@ class Button(DrawGameState):
         Display the helper text to select the destination cell
         '''
         if toggle:
-            self.dest_sel_text = self.font.render(
+            self.dest_sel_text = self.font2.render(
                 "Select your destination", True, p.Color("black"))
             self.dest_sel_surf = self.dest_sel_text.get_rect(topleft=(10, 50))
             self.screen.blit(self.dest_sel_text, self.dest_sel_surf)
         else:
             if self.gs.destination:
-                self.dest_sel_text = self.font.render(
+                self.dest_sel_text = self.font2.render(
                     "Destination selected", True, p.Color("black"))
                 self.dest_sel_surf = self.dest_sel_text.get_rect(
                     topleft=(10, 50))
@@ -119,13 +125,13 @@ class Button(DrawGameState):
         Display the running process
         '''
         if self.gs.isrunning:
-            self.start_sel_text = self.font.render(
+            self.start_sel_text = self.font2.render(
                 "Searching best path...", True, p.Color("black"))
             self.start_sel_surf = self.start_sel_text.get_rect(
                 topleft=(10, 110))
             self.screen.blit(self.start_sel_text, self.start_sel_surf)
         else:
-            self.start_sel_text = self.font.render(
+            self.start_sel_text = self.font2.render(
                 "Done", True, p.Color("black"))
             self.start_sel_surf = self.start_sel_text.get_rect(
                 topleft=(10, 110))
