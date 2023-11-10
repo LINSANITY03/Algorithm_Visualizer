@@ -133,13 +133,18 @@ class Button(DrawGameState):
                     "assets/dest_text_sel.png"), self.dest_sel_surf)
                 self.screen.blit(self.dest_sel_text, self.dest_sel_surf)
 
-    def create_start_selector(self, text):
+    def create_start_selector(self, text=None):
         '''
         Display the running process
         '''
+        toggle = True
+
         self.start_sel_text = self.font2.render(
             text, True, p.Color("black"))
         self.start_sel_surf = self.start_sel_text.get_rect(
             topleft=self.text_below_parent(self.start_rect))
-        print(self.start_sel_surf)
+
+        if toggle:
+            self.screen.blit(p.image.load(
+                "assets/start_text_sel.png"), self.start_sel_surf)
         self.screen.blit(self.start_sel_text, self.start_sel_surf)

@@ -72,17 +72,23 @@ class MainRun:
 
                             elif gs.isrunning:
                                 get_button.create_start_selector(
-                                    "algorithm already running please wait...")
+                                    "please wait...")
                             else:
                                 gs.isrunning = True
+                                get_button.create_start_selector(
+                                    "algorithm already running please wait...")
                                 path = AStar(
                                     gs.source, gs.destination, gs).search()
                                 gs.isrunning = False
                                 if path:
+                                    get_button.create_start_selector(
+                                        "Path found")
                                     for each in path:
                                         gs.board[each[0]][each[1]] = "xx"
                                 else:
                                     print("no path")
+                                    get_button.create_start_selector(
+                                        "No path found")
 
                         elif gs.issrc and not gs.source:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
