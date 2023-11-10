@@ -27,7 +27,6 @@ class MainRun:
     def __init__(self) -> None:
         p.init()
         p.display.set_caption("Algo Visualizer")
-        p.display.set_icon(p.image.load("./assets/logo.png"))
         screen = p.display.set_mode((gv.SCREEN_WIDTH, gv.SCREEN_HEIGHT))
         clock = p.time.Clock()
         screen.fill(p.Color("dark green"))
@@ -69,7 +68,7 @@ class MainRun:
                             if not gs.source and not gs.destination:
                                 print("Please src and destination first")
 
-                            if gs.isrunning:
+                            elif gs.isrunning:
                                 print("algorithm already running please wait...")
                             else:
                                 gs.isrunning = True

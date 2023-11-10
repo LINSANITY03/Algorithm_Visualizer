@@ -14,7 +14,7 @@ class Button(DrawGameState):
         '''
         super().__init__(screen, gs)
         p.font.init()
-        self.font = p.font.SysFont("Grobold", 15)
+        self.font = p.font.Font("assets/font.ttf", 25)
 
         self.src_text = self.font.render("Source", True, p.Color("black"))
         self.dest_text = self.font.render(
