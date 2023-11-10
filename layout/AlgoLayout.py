@@ -95,6 +95,8 @@ class Button(DrawGameState):
         '''
         Display the helper text to select the source cell
         '''
+        print('toggle', toggle)
+        print('self.gs.source', self.gs.source)
         if toggle:
             self.src_sel_text = self.font2.render(
                 "Select your source", True, p.Color("black"))
@@ -105,6 +107,7 @@ class Button(DrawGameState):
 
         else:
             if self.gs.source:
+                print("source selected")
                 self.src_sel_text = self.font2.render(
                     "Source selected", True, p.Color("black"))
                 self.src_sel_surf = self.src_sel_text.get_rect(

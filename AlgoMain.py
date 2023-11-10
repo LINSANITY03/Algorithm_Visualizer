@@ -9,6 +9,7 @@ from core.Game_core import GameCoreState as gcs
 from core.Game_core import GameVariable as gv
 from layout.AlgoLayout import Button
 from core.algorithms.a_star import AStar
+import sys
 
 
 def loadImages():
@@ -84,17 +85,19 @@ class MainRun:
                         elif gs.issrc and not gs.source:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
 
-                                get_button.create_src_selector(False)
                                 gs.board[board_y][board_x] = "src"
                                 gs.source = (board_y, board_x)
+                                get_button.create_src_selector(False)
+                                gs.issrc = False
+                                print(gs.source)
 
                         elif gs.isdtn and not gs.destination:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
 
-                                get_button.create_dest_selector(False)
                                 gs.board[board_y][board_x] = "dest"
-                                gs.isdtn = True
                                 gs.destination = (board_y, board_x)
+                                get_button.create_dest_selector(False)
+                                gs.isdtn = False
 
                         elif gs.iswall:
                             if 0 <= board_x < gv.DIMENSIONS and 0 <= board_y < gv.DIMENSIONS:
@@ -109,6 +112,9 @@ class MainRun:
             get_button = Button(screen, gs)
             clock.tick(gv.MAX_FPS)
             p.display.flip()
+
+        p.quit()
+        sys.exit()
 
 
 if __name__ == '__main__':

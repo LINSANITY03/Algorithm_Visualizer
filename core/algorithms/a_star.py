@@ -81,9 +81,8 @@ class AStar:
                 '''
                 return reconstruct_path(self.start, current_node)
 
-            directions = [[1, 0], [-1, 0], [0, 1], [0, -1],
-                          [1, 1], [1, -1], [-1, -1], [-1, 1]]
-
+            directions = [[-1, 0], [-1, -1], [0, -1],
+                          [1, 1], [1, 0], [1, -1], [0, 1], [-1, 1]]
             children = []
 
             for x, y in directions:
