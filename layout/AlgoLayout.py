@@ -32,12 +32,16 @@ class Button(DrawGameState):
             "Wall", True, self.color)
         self.start_text = self.font.render(
             "Start", True, self.color)
+        self.reset_text = self.font.render(
+            "Reset", True, self.color)
 
         self.src_rect = self.src_text.get_rect(topleft=(30, 30))
         self.dest_rect = self.dest_text.get_rect(topleft=(30, 130))
         self.wall_rect = self.wall_text.get_rect(topleft=(30, 230))
         self.start_rect = self.start_text.get_rect(
             topleft=(30, 430))
+        self.reset_rect = self.reset_text.get_rect(
+            topleft=(30, 530))
         self.create_button()
 
     def center_image_to_text(self, image, rect):
@@ -59,32 +63,14 @@ class Button(DrawGameState):
             self.wall_image, self.center_image_to_text(self.wall_image, self.wall_rect))
         self.screen.blit(
             self.start_image, self.center_image_to_text(self.start_image, self.start_rect))
+        self.screen.blit(
+            self.start_image, self.center_image_to_text(self.start_image, self.reset_rect))
 
         self.screen.blit(self.src_text, self.src_rect)
         self.screen.blit(self.dest_text, self.dest_rect)
         self.screen.blit(self.wall_text, self.wall_rect)
         self.screen.blit(self.start_text, self.start_rect)
-
-    def get_src_btn(self):
-        '''
-        Returns the src button object
-        '''
-
-        return self.src_rect
-
-    def get_dest_btn(self):
-        '''
-        Returns the destination button object
-        '''
-
-        return self.dest_rect
-
-    def get_start_btn(self):
-        '''
-        Returns the start button object
-        '''
-
-        return self.start_rect
+        self.screen.blit(self.reset_text, self.reset_rect)
 
     def text_below_parent(self, parent):
         '''
@@ -137,14 +123,11 @@ class Button(DrawGameState):
         '''
         Display the running process
         '''
-        toggle = True
 
         self.start_sel_text = self.font2.render(
             text, True, p.Color("black"))
         self.start_sel_surf = self.start_sel_text.get_rect(
             topleft=self.text_below_parent(self.start_rect))
-
-        if toggle:
-            self.screen.blit(p.image.load(
-                "assets/start_text_sel.png"), self.start_sel_surf)
+        self.screen.blit(p.image.load(
+            "assets/start_text_sel.png"), self.start_sel_surf)
         self.screen.blit(self.start_sel_text, self.start_sel_surf)

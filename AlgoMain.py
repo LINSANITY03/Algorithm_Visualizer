@@ -76,7 +76,7 @@ class MainRun:
                             else:
                                 gs.isrunning = True
                                 get_button.create_start_selector(
-                                    "algorithm already running please wait...")
+                                    "please wait...")
                                 path = AStar(
                                     gs.source, gs.destination, gs).search()
                                 gs.isrunning = False
@@ -86,7 +86,6 @@ class MainRun:
                                     for each in path:
                                         gs.board[each[0]][each[1]] = "xx"
                                 else:
-                                    print("no path")
                                     get_button.create_start_selector(
                                         "No path found")
 
@@ -114,6 +113,9 @@ class MainRun:
                                 else:
                                     gs.wall.append([board_y, board_x])
                                     gs.board[board_y][board_x] = "wall"
+
+                        elif get_button.reset_rect.collidepoint(current_pos):
+                            MainRun()
 
             gcs.Drawboard(screen, gs)
             get_button = Button(screen, gs)

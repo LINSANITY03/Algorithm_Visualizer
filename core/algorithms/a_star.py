@@ -41,7 +41,7 @@ def heuristic(a, b):
     calculate the heuristic (Euclidean distance)
 
     '''
-    return (math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2) * 10)
+    return math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2)
 
 
 def reconstruct_path(start_node, end_node):
@@ -49,11 +49,12 @@ def reconstruct_path(start_node, end_node):
     get the path once the A* algorithm is completed
     '''
     total_path = []
-    total_distance = 0
+    total_distance = []
+    total_distance.append((end_node.f, end_node.position))
     end_node = end_node.parent
     while end_node != start_node:
         total_path.append(end_node.position)
-        total_distance += end_node.f
+        total_distance.append((end_node.f, end_node.position))
         end_node = end_node.parent
     return total_path[::-1]
 
@@ -80,6 +81,9 @@ class AStar:
         '''
         heapq.heappush(self.open, self.start)
         while self.open:
+
+            print("open_length", len(self.open))
+            print("closed_length", len(self.closed))
             current_node = heapq.heappop(self.open)
             self.closed.add(current_node)
 
@@ -122,10 +126,12 @@ class AStar:
                 child.h = heuristic(child.position, self.end.position)
                 child.f = child.g + child.h
 
+                is_in_open = False
                 for each_node in self.open:
                     if each_node.position == child.position:
                         if each_node.f < child.f:
-                            continue
+                            is_in_open = True
+                            break
                         elif each_node.f > child.f:
                             each_node.f = child.f
                             each_node.parent = child.parent
@@ -133,6 +139,9 @@ class AStar:
                             if each_node.h > child.h:
                                 each_node.h = child.h
                                 each_node.parent = child.parent
+
+                if is_in_open:
+                    continue
 
                 if self.gs.board[child.position[0]][child.position[1]] == "dest":
                     heapq.heappush(self.open, child)
