@@ -44,7 +44,11 @@ class MainRun:
 
                         board_x = (current_pos[0] - gv.RECT_X)//gv.SQ_SIZE
                         board_y = (current_pos[1] - gv.RECT_Y)//gv.SQ_SIZE
-                        if get_button.src_rect.collidepoint(current_pos) and not gs.issrc and not gs.source:
+
+                        if get_button.reset_rect.collidepoint(current_pos):
+                            print("clicked")
+                            MainRun()
+                        elif get_button.src_rect.collidepoint(current_pos) and not gs.issrc and not gs.source:
                             gs.issrc = True
                             gs.iswall = False
                             gs.isdtn = False
@@ -113,9 +117,6 @@ class MainRun:
                                 else:
                                     gs.wall.append([board_y, board_x])
                                     gs.board[board_y][board_x] = "wall"
-
-                        elif get_button.reset_rect.collidepoint(current_pos):
-                            MainRun()
 
             gcs.Drawboard(screen, gs)
             get_button = Button(screen, gs)
