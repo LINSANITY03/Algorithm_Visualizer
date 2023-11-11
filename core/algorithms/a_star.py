@@ -21,7 +21,7 @@ class Node:
         self.f = 0
 
     def __repr__(self):
-        return f'cur:{self.position}-- par:{self.parent}'
+        return f'{self.position}'
 
     def __lt__(self, other):
         return self.f < other.f
@@ -81,9 +81,9 @@ class AStar:
         '''
         heapq.heappush(self.open, self.start)
         while self.open:
+            if (len(self.open) + len(self.closed) + len(self.gs.wall)) == 400:
+                return None
 
-            print("open_length", len(self.open))
-            print("closed_length", len(self.closed))
             current_node = heapq.heappop(self.open)
             self.closed.add(current_node)
 
@@ -129,8 +129,8 @@ class AStar:
                 is_in_open = False
                 for each_node in self.open:
                     if each_node.position == child.position:
+                        is_in_open = True
                         if each_node.f < child.f:
-                            is_in_open = True
                             break
                         elif each_node.f > child.f:
                             each_node.f = child.f
@@ -143,10 +143,15 @@ class AStar:
                 if is_in_open:
                     continue
 
-                if self.gs.board[child.position[0]][child.position[1]] == "dest":
-                    heapq.heappush(self.open, child)
+                if self.gs.board[child.position[0]][child.position[1]] == "dest" and not is_in_open:
+                    if child in self.open:
+                        pass
+                    else:
+                        heapq.heappush(self.open, child)
                 else:
-                    heapq.heappush(self.open, child)
-                    self.gs.board[child.position[0]][child.position[1]] = "vs"
+                    if not is_in_open:
+                        heapq.heappush(self.open, child)
+                    self.gs.board[child.position[0]
+                                  ][child.position[1]] = "vs"
 
         return None
