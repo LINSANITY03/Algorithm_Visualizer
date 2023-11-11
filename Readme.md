@@ -53,7 +53,8 @@ This is a game written in Python to show visualization of popular algorithms. Cu
 - More path finding algorithm integration such as Dijkstra's, Breadth-first, depth-first.
 - Comparison of different algorithm.
 - Addition of sorting algorithms.
+- Automate testing.
 
 ## Collaboration
 
-Feel free to use this codebase for your projects. If you want to talk more about this or have found bugs, create a pull request or contact me on **pujantamang92@gmail.com**.
+Feel free to use this codebase for your projects. If you want to talk more about this project or have found bugs, create a pull request or contact me on **pujantamang92@gmail.com**.
