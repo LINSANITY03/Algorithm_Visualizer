@@ -46,3 +46,14 @@ This is a game written in Python to show visualization of popular algorithms. Cu
 <p align="center">
   <img src="assets/game.JPG" alt="Algorithm_game" height="360" width="640">
 </p>
+
+## Future Integration:
+
+- Main menu layout
+- More path finding algorithm integration such as Dijkstra's, Breadth-first, depth-first.
+- Comparison of different algorithm.
+- Addition of sorting algorithms.
+
+## Collaboration
+
+Feel free to use this codebase for your projects. If you want to talk more about this or have found bugs, create a pull request or contact me on **pujantamang92@gmail.com**.
