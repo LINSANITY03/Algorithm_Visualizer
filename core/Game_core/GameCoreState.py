@@ -4,13 +4,15 @@ from . import GameVariable as gv
 
 class DrawGameState:
 
-    '''
-    Responsible for all the graphics within a current game state.
+    '''Responsible for all the graphics within a current game state.
     '''
 
     def __init__(self, screen, gs) -> None:
-        '''
-        Initialize the screen properties and game state for children class
+        '''Initialize the screen properties and game state for children class
+
+        Args:
+          screen: Current display screen surface.
+          gs: Current game state.
         '''
 
         self.screen = screen
@@ -19,13 +21,16 @@ class DrawGameState:
 
 class Drawboard(DrawGameState):
 
-    '''
-    Draw the squares on the board
+    '''Draw the squares on the board
     '''
 
     def __init__(self, screen, gs) -> None:
         '''
-        Initializes the Rectangular board with the parent class
+        Initializes the Rectangular board with the parent class.
+
+        Args:
+          screen: Current display screen surface.
+          gs: Current game state.
         '''
 
         super().__init__(screen, gs)

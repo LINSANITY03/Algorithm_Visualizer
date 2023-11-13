@@ -46,7 +46,6 @@ class MainRun:
                         board_y = (current_pos[1] - gv.RECT_Y)//gv.SQ_SIZE
 
                         if get_button.reset_rect.collidepoint(current_pos):
-                            print("clicked")
                             MainRun()
                         elif get_button.src_rect.collidepoint(current_pos) and not gs.issrc and not gs.source:
                             gs.issrc = True

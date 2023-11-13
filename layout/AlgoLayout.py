@@ -5,12 +5,14 @@ import pygame as p
 class Button(DrawGameState):
 
     '''
-    Responsible for choosing src, destin
+    Responsible for lifecycle of source, destination, walls and start button.
     '''
 
     def __init__(self, screen, gs) -> None:
-        '''
-        Initialize the required attribute to create the buttons
+        '''Initialize the required attribute to create the buttons.
+
+        Args:
+          screen: Current display screen surface.
         '''
         super().__init__(screen, gs)
 
@@ -47,6 +49,13 @@ class Button(DrawGameState):
     def center_image_to_text(self, image, rect):
         '''
         Center the image to the given object position
+
+        Args:
+          image: Object representing the loaded image.
+          rect: Rectangular object to be centered on.
+
+        Returns:
+          New object with text and image same center position.
         '''
         return image.get_rect(center=rect.center)
 
@@ -73,13 +82,21 @@ class Button(DrawGameState):
         self.screen.blit(self.reset_text, self.reset_rect)
 
     def text_below_parent(self, parent):
+        '''Gives the position below 20px of parent.
+
+        Args:
+          parent: Surface you want to set the bottom value.
+
+        Returns:
+          Tuple representing position 20px below the parent position.
         '''
-        Gives the position below 20px of parent'''
         return (parent.bottomleft[0], parent.bottomleft[1]+20)
 
     def create_src_selector(self, toggle):
-        '''
-        Display the helper text to select the source cell
+        '''Display the helper text to select the source cell.
+
+        Args:
+          toggle: Bool value to represent on and off state.
         '''
         if toggle:
             self.src_sel_text = self.font2.render(
@@ -99,8 +116,10 @@ class Button(DrawGameState):
                 self.screen.blit(self.src_sel_text, self.src_sel_surf)
 
     def create_dest_selector(self, toggle):
-        '''
-        Display the helper text to select the destination cell
+        '''Display the helper text to select the destination cell.
+
+        Args:
+          toggle: Bool value to represent on and off state.
         '''
 
         if toggle:
@@ -120,8 +139,10 @@ class Button(DrawGameState):
                 self.screen.blit(self.dest_sel_text, self.dest_sel_surf)
 
     def create_start_selector(self, text=None):
-        '''
-        Display the running process
+        '''Display the running process.
+
+        Args:
+          text: String you want to show when start button is pressed.
         '''
 
         self.start_sel_text = self.font2.render(

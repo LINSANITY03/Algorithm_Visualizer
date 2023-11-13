@@ -6,9 +6,14 @@ It will also keep a move log.
 
 
 class GameState:
+    """
+    Store the current state of the game.
+    """
+
     def __init__(self) -> None:
-        # board is a 20x20 2-D array list.
-        # "--" represents the empty space.
+        """Board is a 20x20 2-D array list.
+        "--" represents the empty space.
+        """
         self.board = [
             ["--", "--", "--", "--", "--", "--", "--", "--", "--", "--",
                 "--", "--", "--", "--", "--", "--", "--", "--", "--", "--"],
@@ -50,7 +55,7 @@ class GameState:
                 "--", "--", "--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--", "--", "--",
                 "--", "--", "--", "--", "--", "--", "--", "--", "--", "--"],
-            
+
 
         ]
         self.movelog = []

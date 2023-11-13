@@ -4,11 +4,16 @@ import math
 
 
 class Node:
-    '''
-    Represents a A* Node on a position
+    '''Represents a A* Node on a position
     '''
 
     def __init__(self, parent, position) -> None:
+        """Initialize the variable to represent each node.
+
+        Args:
+          parent: Represents the position of previous visited node.
+          position: Current position of the node.
+        """
         self.parent = parent
         self.position = position
 
@@ -37,37 +42,44 @@ class Node:
 
 
 def heuristic(a, b):
-    '''
-    calculate the heuristic (Euclidean distance)
+    '''Calculate the heuristic (Euclidean distance).
 
+    Args:
+      a, b: position of initial and final point.
     '''
     return math.sqrt((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2)
 
 
 def reconstruct_path(start_node, end_node):
     '''
-    get the path once the A* algorithm is completed
+    Represent the shortest path.
+
+    Args:
+      start_node: Source node.
+      end_node: Destination node.
+
+    Returns:
+      The path between source and destination node.
     '''
     total_path = []
-    total_distance = []
-    total_distance.append((end_node.f, end_node.position))
     end_node = end_node.parent
     while end_node != start_node:
         total_path.append(end_node.position)
-        total_distance.append((end_node.f, end_node.position))
         end_node = end_node.parent
     return total_path[::-1]
 
 
 class AStar:
-    '''
-    Determines the shortest path distance between src and destination
-
+    '''Determines the shortest path distance between source and destination using A* algorithm.
     '''
 
     def __init__(self, source, destination, gs) -> None:
-        '''
-        Setup the initial parameter for the search algorithms
+        '''Setup the initial parameter for the search algorithms.
+
+        Args:
+          source: Represent the position (x, y) of source cell.
+          destination: Represent the position (x, y) of destination cell.
+          gs: Current game state.
         '''
         self.gs = gs
         self.open = []
@@ -76,8 +88,7 @@ class AStar:
         self.end = Node(None, destination)
 
     def search(self):
-        '''
-        Create the logic for a* search returning shortest path if found
+        '''Create the logic for a* search returning shortest path if found.
         '''
         heapq.heappush(self.open, self.start)
         while self.open:
@@ -88,11 +99,8 @@ class AStar:
             self.closed.add(current_node)
 
             if current_node == self.end:
-                '''
-
                 # add the all previous point with the current i.e end point to form
                 # a line indicating the shortest path taken
-                '''
                 return reconstruct_path(self.start, current_node)
 
             directions = [[-1, 0], [-1, -1], [0, -1],
