@@ -1,4 +1,5 @@
-![Python versions](https://img.shields.io/badge/python-03.10-blue)
+![Python versions](https://img.shields.io/badge/python-3.10-blue)
+![pygame](https://img.shields.io/badge/pygame-2.5.2-yellow)
 
 # Algorithm Visualizer
 
