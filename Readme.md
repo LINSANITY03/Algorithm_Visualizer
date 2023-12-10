@@ -1,3 +1,5 @@
+![Python versions](https://img.shields.io/badge/python-03.10-blue)
+
 # Algorithm Visualizer
 
 This is a game written in Python to show visualization of popular algorithms. Currently, A star algorithm is visualized to find shortest path in this game with more addition incoming.
